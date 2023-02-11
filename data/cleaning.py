@@ -33,9 +33,9 @@ def combine_lists (lst1, lst2):
 
 # Clean the data frame, from dulicates and nulls.
 def clean_df_citycountry (df):
-    df = df.combine_first(df).reset_index().reindex(location.columns, axis=1).drop_duplicates()
-    df.dropna(how="any", inplace=True)
-    return df
+    x = df.combine_first(df).reset_index().reindex(df.columns, axis=1).drop_duplicates()
+    x.dropna(how="any", inplace=True)
+    return x
 
 # export to csv file - need to change name of file to save.
 def export_location (df):
@@ -43,3 +43,21 @@ def export_location (df):
     
 
  
+ # Startups. ---------------------------------------
+
+# filter information and transform it to df.
+def startupsdf (city):
+    # Conditions for city and amount of the company.
+    condition1 = {"offices.city":city}
+    condition2 = {"acquisitions.price_amount":{"$gte":1500000}}
+    projection = {"name":1, "_id":0, "category_code":1, "offices.address1":1}
+    x = (list(c.find({"$and":
+                             [condition1, condition2]},
+                   projection)))
+    # give a Data frame with conditions and address.
+    df = pd.DataFrame(x)
+    return df
+
+# export info to csv.
+def export_SD_startups (df):
+    return df.to_csv(f"D:\\ironhack\\proyectos\\GeoSpatialData_proy3\csv\\startups_sandiego.csv")   
