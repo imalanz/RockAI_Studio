@@ -46,17 +46,10 @@ def export_location (df):
  # Startups. ---------------------------------------
 
 # filter information and transform it to df.
-def startupsdf (city):
-    # Conditions for city and amount of the company.
-    condition1 = {"offices.city":city}
-    condition2 = {"acquisitions.price_amount":{"$gte":1500000}}
-    projection = {"name":1, "_id":0, "category_code":1, "offices.address1":1}
-    x = (list(c.find({"$and":
-                             [condition1, condition2]},
-                   projection)))
-    # give a Data frame with conditions and address.
-    df = pd.DataFrame(x)
-    return df
+
+
+
+
 
 # export info to csv.
 def export_SD_startups (df):
