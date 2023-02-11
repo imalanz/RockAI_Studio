@@ -1,4 +1,4 @@
 .env
 .ipynb_checkpoints
 csv
-data\__pycache__
+__pycache__
