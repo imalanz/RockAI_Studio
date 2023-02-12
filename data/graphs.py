@@ -53,7 +53,7 @@ def carto_concerts (df):
     return x
 
 # carto maps multiple layers.
-def carto_layers (df1, df2, df3, df4, df5, df6)
+def carto_layers (df1, df2, df3, df4, df5, df6):
     from palettable.cartocolors.diverging import Geyser_7
     x = Map([Layer(music_points, basic_style(size=15, opacity=10, color="#008080"),legends=default_legend('music')),
         Layer(starbucks, basic_style(size=15, opacity=10, color="#70a494"), legends=default_legend("starbucks")),
