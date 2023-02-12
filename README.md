@@ -16,19 +16,29 @@ Had to get all the needs that the company need it, about the company itself and 
 - Music environment around the city or specialy around the office.
 - Some of the employess have kids, that would not have to be a problem.
 
+![portada](https://raw.githubusercontent.com/imalanz/GeoSpatialData_proy3/main/images/night.webp)
 ### About the city.
+Started looking for companies within the same field, where they where ubicated, and for far away most of the companies within the music field where in the US, and for the city that was different.
+It was between San francisco and New York, I wanted something different, not the place where all the companies goes, and how the city structure is, in San francisco, everything is far away, need to take the car everywhere not in NY. Also saw that theres a lot of music environment and a lot of big companies there.
 
-![portada](https://raw.githubusercontent.com/imalanz/GeoSpatialData_proy3/main/images/night.webp) 
+Start seen where the big companies where install in manhathan, and put my focus on that, its low town.
+
+
+
 
  
-
-### About whats happening around.
 ![portada](https://github.com/imalanz/GeoSpatialData_proy3/blob/main/images/1.jpg?raw=true)
 
-![portada](https://github.com/imalanz/GeoSpatialData_proy3/blob/main/images/3.jpg?raw=true) 
+### About whats happening around.
+Ones I got the city and the area, started to look for a more specific ubication and their surroundings, did it looking for the needs of the employees.
+- Starbucks.
+- Bars with music vibes.
+- Music scenarios happening in the streets, parks or thearers.
+- Schools and after clases classes.
+
+
+
 
 
 ## "The future is here"
 ![portada](https://github.com/imalanz/GeoSpatialData_proy3/blob/main/images/AI-music-e12d6aa.jpg?raw=true) 
-
-![portada](https://github.com/imalanz/GeoSpatialData_proy3/blob/main/images/robot.png?raw=true) 
