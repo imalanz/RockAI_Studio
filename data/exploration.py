@@ -197,4 +197,10 @@ def export_NY_schools (df):
 def export_NY_bars (df):
     return df.to_csv(f"D:\\ironhack\\proyectos\\GeoSpatialData_proy3\csv\\bars_newyork.csv")
 
+# 4.3. Concerts.
+
+# export to csv.
+def export_NY_concerts (df):
+    return df.to_csv(f"D:\\ironhack\\proyectos\\GeoSpatialData_proy3\csv\\concerts_newyork.csv")
+
 
