@@ -6,6 +6,7 @@ from cartoframes.auth import set_default_credentials
 from cartoframes.viz import Map, Layer, popup_element, default_legend, animation_style, basic_style,basic_legend, color_category_style, color_category_legend
 set_default_credentials('cartovl')
 set_default_credentials('cartoframes')
+from palettable.cartocolors.diverging import Geyser_7
 
 
 
@@ -58,11 +59,11 @@ def carto_concerts (df):
 # carto maps multiple layers.
 def carto_layers (df1, df2, df3, df4, df5, df6):
     from palettable.cartocolors.diverging import Geyser_7
-    x = Map([Layer(df1, basic_style(size=15, opacity=10, color="#008080"),legends=default_legend('music')),
-        Layer(df2, basic_style(size=15, opacity=10, color="#70a494"), legends=default_legend("starbucks")),
-        Layer(df3, basic_style(size=15, opacity=10, color="#b4c8a8"), legends=default_legend("Startups")),
-        Layer(df4, basic_style(size=15, opacity=10, color="#f6edbd"), legends=default_legend("schools")),
-        Layer(df5, basic_style(size=15, opacity=10, color="#edbb8a"), legends=default_legend("bars")),
-        Layer(df5, basic_style(size=15, opacity=10, color="#de8a5a"), legends=default_legend("concerts"))], layer_selector=True)
+    x = Map([Layer(df1, basic_style(size=15, opacity=10, color="#008080"),legends=default_legend('music companies')),
+        Layer(df2, basic_style(size=15, color="#b4c8a8"), legends=default_legend("Startups")),
+        Layer(df3, basic_style(size=15, color="#70a494"), legends=default_legend("Starbucks")),
+        Layer(df4, basic_style(size=15, color="#f6edbd"), legends=default_legend("Schools")),
+        Layer(df5, basic_style(size=15, color="#edbb8a"), legends=default_legend("Bars")),
+        Layer(df6, basic_style(size=15, color="#de8a5a"), legends=default_legend("Concerts"))], layer_selector=True)
     return x
 
