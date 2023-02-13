@@ -64,6 +64,7 @@ def export_location (df):
     
 
 # 2. Music Companies NY. ----------------------
+
 # Filtering from mongo name, latitude and longitud. to a dictionary.
 def music_NY (category_code, cities):
     condition1 = {"category_code":category_code}
@@ -74,17 +75,17 @@ def music_NY (category_code, cities):
     return city
 
 # selecting only the lat.
-def lat_music (dict):
+def lat_ (dict):
     x = []
-    for i in range(len(music_ny)):
-        x.append(music_ny[i]["offices"][0]["latitude"])
+    for i in range(len(dict)):
+        x.append(dict[i]["offices"][0]["latitude"])
     return x
 
 # selecting only the long.
-def long_music (dict):
+def long_ (dict):
     y = []
-    for i in range(len(music_ny)):
-        y.append(music_ny[i]["offices"][0]["longitude"])
+    for i in range(len(dict)):
+        y.append(dict[i]["offices"][0]["longitude"])
     return y
 
 # dictionary for latitud and long, to create df.
@@ -95,7 +96,7 @@ def coord_df (lats, longs):
     return df
 
 # Filter again the music companies but without the latitud and logitude and turn it into a data frame.
-def music_NY (category_code, city):
+def musicdf_NY (category_code, city):
     # Conditions for city and amount of the company.
     condition1 = {"category_code":category_code}
     condition2 = {"offices.city":city}
@@ -171,33 +172,63 @@ def export_NY_startups (df):
     return df.to_csv(f"D:\\ironhack\\proyectos\\GeoSpatialData_proy3\csv\\startups_newyork.csv")
 
 
-# 4. Foursquare.
+# 4. Foursquare. ------------------------------------------
 
-# 4.1. Starbucks.
+# get the foursquare list of each type of searching.
+def foursquare (tipo):
+    token = getpass()
+    url = "https://api.foursquare.com/v3/places/search"
 
-# Make a dictionary for a single index.
-def coord_name (dict_):
+    params = {
+        "query": tipo,
+        "ll": "40.7380216,-74.003227113",
+        "open_now": "true",
+        "sort":"DISTANCE",
+        "radius": 15000,
+        "limit": 50
+    }
+
+    headers = {
+        "Accept": "application/json",
+        "Authorization": token
+    }
+
+    response = requests.request("GET", url, params=params, headers=headers)
+
+    return response.json()["results"]
+
+# Get only the name, latitude, longitude of the hole dict. need to look it single [0].
+def single_coord_name (dict_):
     dicts = {"name": dict_["name"],
             "latitude": dict_["geocodes"]["main"]["latitude"],
              "longitude": dict_["geocodes"]["main"]["longitude"]}  
     return dicts
 
+# Iterate the full list of foursquare and append the single function (single_coord_name), to iterate just what the single function gets.
+def iterate_all (full_dict_):
+    lst = []
+    for i in full_dict_:
+        lst.append(single_coord_name(i))
+    return lst
+
+# make it a data frame.
+def make_df (dict_):
+    return pd.DataFrame(dict_)
+
+# export df.
 def export_NY_starbucks (df):
     return df.to_csv(f"D:\\ironhack\\proyectos\\GeoSpatialData_proy3\csv\\starbucks_newyork.csv")
 
-# 4.2. Schools.
 
 # export to csv.
 def export_NY_schools (df):
     return df.to_csv(f"D:\\ironhack\\proyectos\\GeoSpatialData_proy3\csv\\schools_newyork.csv")
 
-# 4.3. Bars.
 
 # export to csv.
 def export_NY_bars (df):
     return df.to_csv(f"D:\\ironhack\\proyectos\\GeoSpatialData_proy3\csv\\bars_newyork.csv")
 
-# 4.3. Concerts.
 
 # export to csv.
 def export_NY_concerts (df):
