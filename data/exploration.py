@@ -115,6 +115,24 @@ def concat_axis1 (df1, df2):
     starts = pd.concat([df1, df2], axis=1)
     return starts
 
+# For the geo intersection, from lat and lon throw a list of the neighborhood.
+def dict_format_point (lat, lon):
+# Iterate throw lists of only lon and lat. with the point format to intersect. 
+    d = []
+    for i in range(len(lat)):
+        d.append({"type": "Point", "coordinates": [lon[i], lat[i]]})
+    # get the list of the neightboors of the intersection/ throws a nested list.
+    w = []
+    for i in d:
+        x = list(nyneights.find(
+        {"geometry":
+            {"$geoIntersects": 
+            {"$geometry": i}}}, projection = {"name": 1, "_id":0}))
+        w.append(x) 
+    # comprehention list for get just a list with dictionaries.       
+    comp = [j for i in w for j in i]
+    return comp
+
 # Exporting to csv.
 def export_NY_music (df):
     return df.to_csv(f"D:\\ironhack\\proyectos\\GeoSpatialData_proy3\csv\\musiccompanies_newyork.csv")
@@ -171,12 +189,20 @@ def coord_df (lats, longs):
 
 # used concat function above.
 
+# Clean the list of non values. convert to data frame, delete nulls and back again to list.
+def delete_null (lst):
+    startups_lat = pd.DataFrame(lst)
+    startups_lat.dropna(how="any", inplace=True)
+    startups_lat = startups_lat.values.tolist()
+    lat_lst = [j for i in startups_lat for j in i]
+    return lat_lst
+
 # export to csv.
 def export_NY_startups (df):
     return df.to_csv(f"D:\\ironhack\\proyectos\\GeoSpatialData_proy3\csv\\startups_newyork.csv")
 
 
-# 4. Foursquare. ------------------------------------------
+# 4. Foursquare. ------------------------------------------------
 
 # get the foursquare list of each type of searching.
 def foursquare (tipo, category):
@@ -247,6 +273,13 @@ def geointersection_dict (mongo_):
     # comprehention list for get just a list with dictionaries.       
     comp = [j for i in w for j in i]
     return comp
+
+# Clean data frame and create new columns name="string", porcentage=integer.
+def new_columns (df, name, porcentage):  
+    df["count"] = df.groupby(["name"])["name"].transform("count")
+    stbks = df.drop_duplicates(['name','count'],keep= 'last')
+    stbks[name] = stbks["count"]*porcentage
+    return stbks
 
 # export df.
 def export_NY_starbucks (df):
