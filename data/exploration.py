@@ -300,4 +300,17 @@ def export_NY_bars (df):
 def export_NY_concerts (df):
     return df.to_csv(f"D:\\ironhack\\proyectos\\GeoSpatialData_proy3\csv\\concerts_newyork.csv")
 
+# Merge all count tables and clean it to a big df.
+def merge_count_tables (df1, df2, df3, df4, df5, df6):
+    a = pd.merge(df1, df2, on='name', how='outer')
+    b = pd.merge(a, df3, on='name', how='outer')
+    c = pd.merge(b, df4, on='name', how='outer')
+    d = pd.merge(c, df5, on='name', how='outer')
+    e = pd.merge(d, df6, on='name', how='outer')
+    e.drop(columns=["count_x", "count_y"], inplace=True)
+    e.rename(columns={'name': 'neighbourhood'}, inplace=True, errors='raise')
+    return e
 
+# export to csv.
+def export_NY_neigh (df):
+    return df.to_csv(f"D:\\ironhack\\proyectos\\GeoSpatialData_proy3\csv\\neigh_newyork.csv")
