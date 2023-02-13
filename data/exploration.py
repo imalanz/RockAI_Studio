@@ -18,6 +18,8 @@ import pymongo
 client = MongoClient("localhost:27017")
 db = client["Ironhack"]
 c = db.get_collection("companies")
+nyneights = db.get_collection("nyneigh")
+mongo_starbucks = db.get_collection("ny_starbucks")
 
 # 1.2. country. ---------------
 # extracting a list of the countries chosing the category of the business.
@@ -217,6 +219,34 @@ def iterate_all (full_dict_):
 # make it a data frame.
 def make_df (dict_):
     return pd.DataFrame(dict_)
+
+# geointersection = make a new data frame from exporting the DF to a mongo file, make the points of lat and long to intersecto to geojson neights.
+def geointersection_dict (mongo_):
+    # get info of latitude and longitud of collection created. 
+    coords = list(mongo_.find({},{"_id":0, "latitude":1, "longitude":1} ))
+    # get latitude list.
+    latitude = []
+    for i in range(len(coords)):
+        latitude.append(coords[i]["latitude"])
+    # get longitude list.
+    longitude = []
+    for i in range(len(coords)):
+        longitude.append(coords[i]["longitude"])
+    # put them tougether in a single list with the format for getting the geointersection {"type": "Point", "coordinates": [longitude[i], latitude[i]]}
+    d = []
+    for i in range(len(latitude)):
+        d.append({"type": "Point", "coordinates": [longitude[i], latitude[i]]})
+    # get the list of the neightboors of the intersection/ throws a nested list.
+    w = []
+    for i in d:
+        x = list(nyneights.find(
+        {"geometry":
+            {"$geoIntersects": 
+            {"$geometry": i}}}, projection = {"name": 1, "_id":0}))
+        w.append(x)    
+    # comprehention list for get just a list with dictionaries.       
+    comp = [j for i in w for j in i]
+    return comp
 
 # export df.
 def export_NY_starbucks (df):
