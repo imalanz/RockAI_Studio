@@ -90,7 +90,7 @@ def long_ (dict):
 
 # dictionary for latitud and long, to create df.
 def coord_df (lats, longs):
-    lon_lat = {"latitud": lats,
+    lon_lat = {"latitude": lats,
               "longitude": longs}
     df = pd.DataFrame(lon_lat)
     return df
@@ -108,7 +108,7 @@ def musicdf_NY (category_code, city):
     df = pd.DataFrame(x)
     return df    
 
-# concat the 2 df.
+# concat the 3 df.
 def concat_axis1 (df1, df2):
     starts = pd.concat([df1, df2], axis=1)
     return starts
@@ -131,32 +131,34 @@ def startups_cooord (city, amount):
                    projection)))
     return x
 
-# Get latitude in list.
-def lat_startup (dict):
-    x = []
-    for i in range(len(startups)):
-        x.append(startups[i]["offices"][0]["latitude"])
-    return x
-
-# get longitud in list.
-def long_startup (dict):
-    y = []
-    for i in range(len(startups)):
-        y.append(startups[i]["offices"][0]["longitude"])
-    return y
-
 # Filter again the startups but without the latitud and logitude and turn it into a data frame.
 def startups_name (city, amount):
     # Conditions for city and amount of the company.
     condition1 = {"offices.city":city}
     condition2 = {"acquisitions.price_amount":{"$gte":amount}}
-    projection = {"name":1, "_id":0, "category_code":1}
+    projection = {"name":1, "_id":0, "category_code":1, "acquisitions.price_amount":1}
     x = (list(c.find({"$and":
                              [condition1, condition2]},
                    projection)))
     # give a Data frame with conditions and address.
     df = pd.DataFrame(x)
     return df  
+
+# function to separete the price amount of startup table and put it a data frame.
+def price_amount (city, amount):
+    condition1 = {"offices.city": city}
+    condition2 = {"acquisitions.price_amount":{"$gte":amount}}
+    projection = {"name":1, "_id":0, "category_code":1, "acquisitions.price_amount":1}
+    x = (list(c.find({"$and":
+                                [condition1, condition2]},
+                    projection)))
+        #iterate the dict to get the price amount.
+    y=[]
+    for i in range(len(x)):
+        y.append(x[i]["acquisitions"][0]["price_amount"])
+        # give a Data frame with amount.
+    df = pd.DataFrame(y)
+    return df
 
 # dictionary for latitud and long, to create df.
 def coord_df (lats, longs):
@@ -175,7 +177,7 @@ def export_NY_startups (df):
 # 4. Foursquare. ------------------------------------------
 
 # get the foursquare list of each type of searching.
-def foursquare (tipo):
+def foursquare (tipo, category):
     token = getpass()
     url = "https://api.foursquare.com/v3/places/search"
 
@@ -185,7 +187,8 @@ def foursquare (tipo):
         "open_now": "true",
         "sort":"DISTANCE",
         "radius": 15000,
-        "limit": 50
+        "limit": 50,
+        "category": category
     }
 
     headers = {
