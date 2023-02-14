@@ -33,8 +33,8 @@ Start seen where the big companies where install in manhathan, and put my focus 
 Ones I got the city and the area, started to look for a more specific ubication and their surroundings, did it looking for the needs of the employees.
 - Starbucks.
 - Bars with music vibes.
-- Music scenarios happening in the streets, parks or thearers.
-- Schools and after clases classes.
+- Music scenarios happening in the streets, parks or theaters.
+- Schools and after clases.
 
 
 
