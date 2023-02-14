@@ -56,6 +56,15 @@ def carto_concerts (df):
     x = Map(Layer(df, basic_style(size=15, color="#de8a5a"), legends=default_legend("Concerts")))
     return x
 
+import plotly.express as px
+# Pie graph.
+def pie (df):
+    # deleting columns that dont work for the pie, with null values.
+    df["sum"] = df.fillna(0)["concerts %"] + df.fillna(0)["bars %"] + df.fillna(0)["schools %"] + df.fillna(0)["starbucks %"] + df.fillna(0)["startups. %"] + df.fillna(0)["music_comp. %"]
+    # get the plotly pie chart.
+    fig = px.pie(df[:10], values='sum', names='neighbourhood', color_discrete_sequence=px.colors.sequential.RdBu, title='Value of neighbourhoods')
+    return fig.show()
+
 # carto maps multiple layers.
 def carto_layers (df1, df2, df3, df4, df5, df6):
     from palettable.cartocolors.diverging import Geyser_7
